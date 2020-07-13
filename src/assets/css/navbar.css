@@ -1,0 +1,16 @@
+.flex-grow{
+    flex-grow: 1;
+}
+
+.nav-menu{
+    display: flex;
+    align-items: center;
+}
+
+.nav-menu div{
+    display: flex;
+    float: left;
+    margin: 0px 15px;
+    align-items: center;
+}
+
