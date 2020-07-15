@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import '../../assets/css/navbar.css';
 
 //icons
-import SearchIcon from '@material-ui/icons/Search';
 import FavoriteBorderTwoToneIcon from '@material-ui/icons/FavoriteBorderTwoTone';
 import ShoppingCartTwoToneIcon from '@material-ui/icons/ShoppingCartTwoTone';
 import MenuTwoToneIcon from '@material-ui/icons/MenuTwoTone';
@@ -14,12 +13,11 @@ import MenuTwoToneIcon from '@material-ui/icons/MenuTwoTone';
 //local imports
 import NavSearchbar from './nav-searchbar';
 import { logoutUser } from '../../redux/actions/authActions';
-import MobileNavbar from './mobile-navbar';
+import MobileNavbar from './mobile-drawer';
 
 
 
 const Navbar = (props) => {
-    const [searchVisible, setSearchVisible] = useState(false);
     const [mobileNavOpen,toggleMobileNav] = useState(false);
     const [anchorEl, setAnchor] = useState(null);
 
@@ -34,24 +32,22 @@ const Navbar = (props) => {
                     Logo
                 </nav>
                 <div className='flex-grow' />
-                <nav className='nav-menu-desktop d-none d-lg-flex'>
-                    {searchVisible && 
+                <nav className='d-none d-lg-block'>
                     <div>
                         <NavSearchbar />
                     </div>
-                    }                       
-                    <div>
-                        <IconButton onClick={()=>setSearchVisible(!searchVisible)}><SearchIcon /></IconButton>
-                    </div>
+                </nav>
+                <nav className='nav-menu-desktop d-none d-lg-flex'>
+                    <a style={{textDecoration:'none'}} href={props.auth.isAuthenticated ? '/listings' : '/login'}>
                     <div>
                         <IconButton><FavoriteBorderTwoToneIcon /></IconButton>
                     </div>
                     <div>
                         <IconButton ><ShoppingCartTwoToneIcon /></IconButton>
                     </div>
+                    </a>
                 </nav>
-                <nav className='nav-menu-des
-                top'>
+                <nav style={{marginLeft:'15px'}}>
                     <div>
                         <Avatar onClick={(e)=>setAnchor(e.currentTarget)} />
                         <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={()=>setAnchor(null)}>
@@ -64,6 +60,11 @@ const Navbar = (props) => {
                             }      
                         </Menu>
                     </div>
+                </nav>
+            </Toolbar>
+            <Toolbar className='d-block d-lg-none'>
+                <nav className='nav-searchbar-mobile'>
+                    <NavSearchbar mobile={true} />
                 </nav>
             </Toolbar>
         </AppBar>

@@ -53,7 +53,7 @@ const ListingsCard = (props) => {
           <div className="bnb-card">
             <div>
               <img
-                src={props.data.image + '_1024x720'}
+                src={props.data.image}
                 alt=""
                 width='100%'
                 height='100%'

@@ -1,21 +1,25 @@
-import React, { useEffect } from 'react';
-import { InputBase, makeStyles } from '@material-ui/core';
+import React from 'react';
+import { makeStyles, TextField, InputAdornment } from '@material-ui/core';
 
+//icons
+import SearchIcon from '@material-ui/icons/Search';
 
 const NavSearchbar = () => {
-    useEffect(()=>{
-        document.getElementById('nav-searchbar').classList.add('animate__fadeInRight');
-    },[]);
-
     const style = searchbarStyle();
-
     return ( 
         <>
             <div id='nav-searchbar' className='animate__animated'>
-                <InputBase
+                <TextField
+                    fullWidth
                     classes={{root: style.root}}
                     placeholder="Search…"
-                    inputProps={{ 'aria-label': 'search' }}
+                    InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <SearchIcon />
+                          </InputAdornment>
+                        ),
+                      }}
                 />
             </div>
         </>
@@ -26,7 +30,7 @@ export default NavSearchbar;
 
 const searchbarStyle = makeStyles({
     root:{
-        border: '1px solid black',
-        borderRadius: '12px',
+        padding: '5px',
+        width:'400px',
     }
-})
+});

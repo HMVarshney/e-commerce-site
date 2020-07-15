@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import ListingsCard from './listingsCard';
 import { fetchData } from '../../redux/actions/dataActions';
 import { connect } from 'react-redux';
+import SpinnerLoader from '../loaders/spinnerLoader';
 
 
 const Listings = (props) => {
@@ -15,7 +16,7 @@ const Listings = (props) => {
     console.log(props.data);
 
     if(loading){
-        return <div>Loading</div>
+        return <SpinnerLoader />
     } else if(error) {
         return <div>Error</div>
     } else {

@@ -71,7 +71,6 @@ const Login = (props) => {
                 </Typography>
             </div>
         </Container>
-        <Button onClick={()=>googleLogin()}>GoogleLogin</Button>
         </>
     );
 };
