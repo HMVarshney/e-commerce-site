@@ -1,5 +1,5 @@
 import * as ActionTypes from './actionTypes';
-import { auth, db } from "../api/fbConfig";
+import { auth, db } from "../../api/fbConfig";
 
 const loginRequest = () => ({
     type: ActionTypes.LOGIN_REQUEST
@@ -53,14 +53,14 @@ const registerRequest = () => ({
 const loginUser = (email,password) => (dispatch) => {
     dispatch(loginRequest());
 
-    auth.signInWithEmailAndPassword(email, password)
+    return auth.signInWithEmailAndPassword(email, password)
         .then((user)=>dispatch(loginSuccess(user)))
         .catch((error) => {
             dispatch(loginError(error))});
 };
 
 const logoutUser = () => (dispatch) => {
-    auth.signOut()
+    return auth.signOut()
         .then(()=>dispatch(logoutSuccess()))
         .catch((error)=>dispatch(logoutFailed(error)));
 };
@@ -68,7 +68,7 @@ const logoutUser = () => (dispatch) => {
 const verifyAuth = () => (dispatch) => {
     dispatch(verifyRequest());
 
-    auth.onAuthStateChanged((user)=>{
+    return auth.onAuthStateChanged((user)=>{
         if(user !== null){
             dispatch(loginSuccess(user));
         };
@@ -80,18 +80,25 @@ const verifyAuth = () => (dispatch) => {
 const registerUser = (email,password,name) => (dispatch) => {
     dispatch(registerRequest);
 
-    auth.createUserWithEmailAndPassword(email, password)
+    return auth.createUserWithEmailAndPassword(email, password)
         .then(({user:{uid}})=>{
             dispatch(registerSuccess())
-            dispatch(loginUser(email,password))
             return uid
+        })
+        .then((uid)=>{
+            return dispatch(loginUser(email,password))
+                        .then(()=>uid)
         })
         .then((uid)=>{
             db.collection('users').doc(uid.toString()).set({
                 name
             });
+            return true
         })
-        .catch((error)=>dispatch(registerFailed(error)));
+        .catch((error)=>{
+            dispatch(registerFailed(error))
+            return false;
+        });
 } 
 
 export { loginUser, logoutUser, verifyAuth, registerUser };

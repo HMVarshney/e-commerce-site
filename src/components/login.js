@@ -6,9 +6,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import '../assets/css/login-page.css';
 
 //local imports
-import { loginUser } from '../redux/actions';
+import { loginUser } from '../redux/actions/authActions';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import firebase,{ auth } from '../api/fbConfig';
 
 const Login = (props) => {
     const [credentials, setCredentials] = useState({
@@ -16,13 +17,21 @@ const Login = (props) => {
         password:''
     });
 
+    const history = useHistory();
+
     const style = loginFormStyles();
 
     const handleSubmit = () => {
         if(credentials.email && credentials.password){
-            props.dispatch(loginUser(credentials.email, credentials.password));
+            props.dispatch(loginUser(credentials.email, credentials.password))
+                .then(()=>{history.push('/')});
         }
     };
+
+    const googleLogin = () => {
+        auth.signInWithPopup(firebase.auth.GoogleAuthProvider());
+    }
+
     return ( 
         <>  
         <Container maxWidth="xs" component='main'>
@@ -62,6 +71,7 @@ const Login = (props) => {
                 </Typography>
             </div>
         </Container>
+        <Button onClick={()=>googleLogin()}>GoogleLogin</Button>
         </>
     );
 };

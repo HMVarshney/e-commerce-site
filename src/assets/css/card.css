@@ -1,0 +1,46 @@
+.bnb-card {
+  width: 100%;
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  margin-right: 0.5em;
+}
+
+.bnb-card-desc {
+  height: auto;
+}
+
+.bnb-card-image {
+  border-radius: 8px;
+  height: 100%;
+  object-fit: contain;
+}
+
+.bnb-card-title {
+  text-align: start;
+  font-size: 1em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.bnb-card-sub {
+  text-align: start;
+  font-size: 0.9rem;
+  color: rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.bnb-card-star-icon {
+  margin-top: 0.15rem;
+}
+
+.bnb-card-plan-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  height: 28px;
+  width: 28px;
+}

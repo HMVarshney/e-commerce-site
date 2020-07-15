@@ -38,7 +38,7 @@ const Home = (props) => {
 }
 
 const stateToProps = (state) => ({
-    userName: state.userDetails.uid
+    userName: state.auth.userDetails.uid
 })
 
 export default (connect(stateToProps)(Home));

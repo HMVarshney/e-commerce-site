@@ -2,15 +2,26 @@
     flex-grow: 1;
 }
 
-.nav-menu{
+.nav-menu-desktop{
     display: flex;
     align-items: center;
 }
 
-.nav-menu div{
+.nav-menu-desktop div{
     display: flex;
     float: left;
     margin: 0px 15px;
     align-items: center;
+}
+
+.cart-options-mobile ul{
+    display: flex;
+    justify-content: center ;
+    list-style: none;
+}
+
+.cart-options-mobile ul li{
+    display: inline;
+    margin: 10px 5px;
 }
 

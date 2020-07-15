@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
 import { TextField, makeStyles, Paper, Typography, Avatar, Container, Button } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { connect } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
 
 //css
 import '../assets/css/login-page.css';
 
 //local imports
-import { registerUser } from '../redux/actions';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { registerUser } from '../redux/actions/authActions';
+import SpinnerLoader from './loaders/spinnerLoader';
+
 
 const SignUp = (props) => {
+
+   const history = useHistory(); 
     const [credentials, setCredentials] = useState({
         email:'',
         password:'',
@@ -20,7 +24,11 @@ const SignUp = (props) => {
 
     const handleSubmit = () => {
         if(credentials.email && credentials.password){
-            props.dispatch(registerUser(credentials.email, credentials.password, credentials.name));
+            setCredentials({email:'',password:'',name:''});
+            props.dispatch(registerUser(credentials.email, credentials.password, credentials.name))
+                .then((signUpSuccess)=>{
+                    if(signUpSuccess) history.push('/')
+                });
         }
     };   
     return ( 
@@ -72,16 +80,18 @@ const SignUp = (props) => {
                 </Typography>
             </div>
         </Container>
+        {props.isLoggingIn && <SpinnerLoader />}
         </>
     );
 };
-
+ 
 const stateToProps = (state) => ({
     auth: {
         isLoggedIn: state.isLoggedIn,
+        isLoggingIn: state.isLoggingIn,
     }
 });
- 
+
 export default (connect(stateToProps)(SignUp));
 
 
